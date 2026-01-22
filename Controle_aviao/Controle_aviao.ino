@@ -1,11 +1,11 @@
 //#include <Servo.h>
 
-int YJ1 = A0;
-int XJ1 = A1;
-int YJ2 = A2;
-//int XJ2 = A3;
+int YVector_JoystickOne = A0;
+int XVector_JoystickOne = A1;
+int YVector_JoystickTwo = A2;
+//int XVector_JoystickTwo = A3;
 
-int XJ1_val, YJ1_val /*, XJ2_val*/, YJ2_val;
+int XVector_JoystickOne_val, YVector_JoystickOne_val /*, XVector_JoystickTwo_val*/, YVector_JoystickTwo_val;
 
 //no joystick 1
 int profundor = 6;
@@ -28,10 +28,10 @@ int asas = 10;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(XJ1, INPUT);
-  pinMode(YJ1, INPUT);
-  //pinMode(XJ2, INPUT);
-  pinMode(YJ2, INPUT);
+  pinMode(XVector_JoystickOne, INPUT);
+  pinMode(YVector_JoystickOne, INPUT);
+  //pinMode(XVector_JoystickTwo, INPUT);
+  pinMode(YVector_JoystickTwo, INPUT);
 
   //prof_servo.attach(profundor);
   //asas_servo.attach(asas);
@@ -43,26 +43,26 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 
-  XJ1_val = analogRead(XJ1);
-  YJ1_val = analogRead(YJ1);
-  XJ2_val = analogRead(XJ2);
-  YJ2_val = analogRead(YJ2);
+  XVector_JoystickOne_val = analogRead(XVector_JoystickOne);
+  YVector_JoystickOne_val = analogRead(YVector_JoystickOne);
+  XVector_JoystickTwo_val = analogRead(XVector_JoystickTwo);
+  YVector_JoystickTwo_val = analogRead(YVector_JoystickTwo);
 
   Serial.print("asas: ");
-  Serial.print(XJ1_val);
+  Serial.print(XVector_JoystickOne_val);
   Serial.print(" | profundor: ");
-  Serial.print(YJ1_val);
+  Serial.print(YVector_JoystickOne_val);
   Serial.print(" | aceleracao: ");
-  Serial.println(YJ2_val );
+  Serial.println(YVector_JoystickTwo_val );
 
 
   /*No joystick 1, o X representa as asas, e o Y, o profundor
-  asas_pos = map(XJ1_val, 0, 1023, 0, 180);
-  prof_pos = map(YJ1_val, 0, 1023, 0, 180); //depois mudar os valores para algo mais coerente
+  asas_pos = map(XVector_JoystickOne_val, 0, 1023, 0, 180);
+  prof_pos = map(YVector_JoystickOne_val, 0, 1023, 0, 180); //depois mudar os valores para algo mais coerente
 
   // No joystick 2, o X representa o leme, e o Y, o acelerador
   leme_pos = map(XJ2_val, 0, 1023, 0, 180);
-  acel_pos = map(YJ2_val, 0, 1023, 0, 180);// denovo, mudar os valores para algo mais real
+  acel_pos = map(YVector_JoystickTwo_val, 0, 1023, 0, 180);// denovo, mudar os valores para algo mais real
 
   asas_servo.write(asas_pos);
   prof_servo.write(prof_pos);
@@ -76,4 +76,3 @@ void loop() {
 
  delay(100);
 };
-
