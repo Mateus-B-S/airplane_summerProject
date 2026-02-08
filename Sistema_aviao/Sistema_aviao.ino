@@ -27,7 +27,7 @@ Acoes dados;
 void resetarAcoes()
 {
   dados.profundor = 300;   //ligeiramente para baixo
-  dados.asas = 600;       //ligeiramente para direita
+  dados.asas = 900;       //ligeiramente para direita
   dados.motor = 512;    // Centro (0-1023)
 };
 
@@ -65,7 +65,7 @@ void loop() {
   
   // Mapeia os valores para o range dos servos
   angulo_profundor = map(dados.profundor, 0, 1023, 15, 120);
-  angulo_asas = map(dados.asas, 0, 1023, 0, 130);
+  angulo_asas = map(dados.asas, 0, 1023, 0, 60);
   nivel_aceleracao = map(dados.motor, 0, 1023, 15, 120);
 
   // Escreve os valores mapeados aos servos
