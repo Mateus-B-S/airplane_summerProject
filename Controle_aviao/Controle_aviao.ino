@@ -2,22 +2,26 @@
 #include <RF24.h>
 #include <nRF24L01.h>
 
+
+
 int YVector_JoystickOne = A0;
 int XVector_JoystickOne = A1;
 int YVector_JoystickTwo = A2;
-//int XVector_JoystickTwo = A3;
+int XVector_JoystickTwo = A3;
 
 int XVector_JoystickOne_val, YVector_JoystickOne_val /*, XVector_JoystickTwo_val*/, YVector_JoystickTwo_val;
 
 //"mensagem" mandada pelo trasmissor e que irá ser recebida pelo receptor (no avião), PRECISA SER O MESMO VALOR!!
-const uint64_t pipeOut = 0xE8E8F0F0E1LL;
+const byte endereco[6] ="00001";
+
+
 
 RF24 radio(9, 10);
 
 struct Dados {
-  byte profundor;
-  byte asas;
-  byte motor;
+  int profundor;
+  int asas;
+  int motor;
 };
 
 Dados comando;
@@ -29,7 +33,6 @@ void resetComandos() {  //inializa os motores para suas posições certas.
 };
 
 void setup() {
-  Serial.begin(9600);
   pinMode(XVector_JoystickOne, INPUT);
   pinMode(YVector_JoystickOne, INPUT);
   //pinMode(XVector_JoystickTwo, INPUT);
@@ -37,8 +40,8 @@ void setup() {
   radio.begin();
   radio.setAutoAck(false);  //não verifica se recebeu os dados automaticamente, fazendo a comunicação mais rápida
   radio.setDataRate(RF24_250KBPS);
-  radio.openWritingPipe(pipeOut);
-  radio.setPALevel(RF24_PA_MAX);
+  radio.openWritingPipe(endereco);
+  radio.setPALevel(RF24_PA_MIN);
   radio.stopListening();
   resetComandos();
 };
@@ -52,19 +55,14 @@ void loop() {
   //XVector_JoystickTwo_val = analogRead(XVector_JoystickTwo);
   YVector_JoystickTwo_val = analogRead(YVector_JoystickTwo);
 
-  comando.profundor = map(YVector_JoystickOne, 0, 1023, 0, 120);
-  comando.asas = map(XVector_JoystickOne, 0, 1023, 0, 150);
-  comando.motor = map(YVector_JoystickTwo, 0, 1023, 0, 180);
+  comando.profundor = YVector_JoystickOne_val;
+  comando.asas = XVector_JoystickOne_val;
+  comando.motor = YVector_JoystickTwo_val;
+
+  
 
   radio.write(&comando, sizeof(Dados));
 
-  Serial.print("asas: ");
-  Serial.print(XVector_JoystickOne_val);
-  Serial.print(" | profundor: ");
-  Serial.print(YVector_JoystickOne_val);
-  Serial.print(" | aceleracao: ");
-  Serial.println(YVector_JoystickTwo_val);
 
-
-  delay(100);
+  delay(15);
 };
