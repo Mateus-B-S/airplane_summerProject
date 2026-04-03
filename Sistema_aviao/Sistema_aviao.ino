@@ -28,9 +28,10 @@ void resetarAcoes()
 {
   dados.profundor = 300;   //ligeiramente para baixo
   dados.asas = 900;       //ligeiramente para direita
-  dados.motor = 512;    // Centro (0-1023)
+  dados.motor = 900;    // Centro (0-1023)
 };
 
+unsigned long ultimaVezRecebido = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -46,9 +47,9 @@ void setup() {
   motor_asas.attach(5);
   motor.attach(6);
   resetarAcoes();
+  ultimaVezRecebido = 0;
 }
 
-unsigned long ultimaVezRecebido = 0;
 
 
 void loop() {
@@ -64,9 +65,9 @@ void loop() {
   }
   
   // Mapeia os valores para o range dos servos
-  angulo_profundor = map(dados.profundor, 0, 1023, 15, 120);
-  angulo_asas = map(dados.asas, 0, 1023, 0, 60);
-  nivel_aceleracao = map(dados.motor, 0, 1023, 15, 120);
+  angulo_profundor = map(dados.profundor, 0, 1023, 0, 255);
+  angulo_asas = map(dados.asas, 0, 1023, 0, 255);
+  nivel_aceleracao = map(dados.motor, 0, 1023, 0, 255);
 
   // Escreve os valores mapeados aos servos
   motor_profundor.write(angulo_profundor);
