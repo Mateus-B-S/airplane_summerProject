@@ -64,12 +64,11 @@ void loop() {
     resetarAcoes();
   }
   
-  // Mapeia os valores para o range dos servos
+  // Transforma os valores em ângulos
   angulo_profundor = map(dados.profundor, 0, 1023, 0, 255);
   angulo_asas = map(dados.asas, 0, 1023, 0, 255);
   nivel_aceleracao = map(dados.motor, 0, 1023, 0, 255);
 
-  // Escreve os valores mapeados aos servos
   motor_profundor.write(angulo_profundor);
   motor_asas.write(angulo_asas);
   motor.write(nivel_aceleracao);

@@ -48,7 +48,6 @@ void setup() {
 
 
 void loop() {
-  // put your main code here, to run repeatedly:
 
   XVector_JoystickOne_val = analogRead(XVector_JoystickOne);
   YVector_JoystickOne_val = analogRead(YVector_JoystickOne);
